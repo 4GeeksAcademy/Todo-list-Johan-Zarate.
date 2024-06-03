@@ -4,23 +4,50 @@ import React from "react";
 import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
-const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
-};
+const input = document.querySelector("input");
+const addBtn = document.querySelector(".btn-add");
+const ul = document.querySelector("ul");
+const empty = document.querySelector(".empty");
+
+addBtn.addEventListener("click" , (e) => {
+	e.preventDefault();
+
+	const text = input.value;
+
+		if (text !== "") {
+			const li = document.createElement("li");
+			const p = document.createElement("p");
+				p.textContent = text; 
+
+				li.appendChild(p);
+				li.appendChild(addDeleteBtn());
+				ul.appendChild(li);
+
+				input.value = "";
+				empty.style.display = "none";
+			}
+});
+
+function addDeleteBtn() {
+	const deleteBtn = document.createElement("button");
+
+	deleteBtn.textContent = "X";
+	deleteBtn.className = "btn-delete";
+	
+	deleteBtn.addEventListener('click', (e) => {
+		const item = e.target.parentElement;
+		ul.removeChild(item);
+
+		const items = document.querySelectorAll('li');
+
+		if (items.length === 0) {
+			empty.style.display = "block";
+		}
+	});
+
+	return deleteBtn;
+
+}
 
 export default Home;
+
